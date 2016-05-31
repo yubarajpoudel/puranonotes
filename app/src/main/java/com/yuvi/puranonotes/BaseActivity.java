@@ -3,6 +3,7 @@ package com.yuvi.puranonotes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 /**
  * Created by yubraj on 5/29/16.
@@ -25,5 +26,10 @@ public class BaseActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void toast(String mesg) {
+        Toast.makeText(this, mesg, Toast.LENGTH_SHORT).show();
+    }
+
 
 }

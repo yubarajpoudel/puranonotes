@@ -1,16 +1,19 @@
 package com.yuvi.puranonotes;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,8 +24,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.mtoolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("DashBoard");
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
+        }
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.rv_mainList);
         rv.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
@@ -39,6 +48,13 @@ public class MainActivity extends AppCompatActivity {
                     HomeViewHolder mHolder = (HomeViewHolder) holder;
                     mHolder.tv_title.setText(item.name.toUpperCase());
                     mHolder.iv_thumb.setImageResource(item.icon);
+                    mHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Log.d("Main", "item clicked");
+                            startActivity(new Intent(getApplicationContext(), ItemListActivity.class));
+                        }
+                    });
                 }
             }
 
